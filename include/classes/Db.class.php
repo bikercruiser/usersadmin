@@ -2,16 +2,24 @@
 
 class Db {
     
-    public function connect() {
+    public static function connect() {
         
-        require 'config/config.php';
+        require $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
         
-        $dbc = new mysqli($db_host, $db_login, $db_password);
+        $dbc = new mysqli($db_host, $db_login, $db_password, $db_name);
         
         if($dbc->connect_error) {
             die("Connection failed: " . $dbc->connect_error);
         }
-        echo "Connect success!";
+        
+        return $dbc;
     }
+    
+    /*
+    public function insertData() {
+        
+    }
+     * 
+     */
 }
 ?>
