@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Db {
     
     public function connect() {
