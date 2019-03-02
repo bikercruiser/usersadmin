@@ -12,11 +12,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="fullName">ФИО</label>
-                        <input type="text" class="form-control" name="fullname" id="fullName" placeholder="Введите ваше имя">
+                        <input type="text" class="form-control" name="fullname" id="fullName" placeholder="Введите ваше имя" required>
                     </div>
                     <div class="form-group">
-                        <label for="Email">E-Mail</label>
-                        <input type="email" class="form-control" name="email" id="eMmail" placeholder="Введите адрес электронной почты">
+                        <label for="eMail">E-Mail</label>
+                        <input type="email" class="form-control" name="email" id="eMail" placeholder="Введите адрес электронной почты" required>
                     </div>
                     <div class="form-group">
                         <label for="Address">Адрес</label>

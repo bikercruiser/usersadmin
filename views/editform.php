@@ -9,18 +9,19 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <input type="hidden" name="id" id="editId" value="">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="fullName">ФИО</label>
-                        <input type="text" class="form-control" name="fullname" id="fullName" placeholder="Введите ваше имя">
+                        <label for="editFullName">ФИО</label>
+                        <input type="text" class="form-control" name="fullname" id="editFullName" placeholder="Введите ваше имя" required>
                     </div>
                     <div class="form-group">
-                        <label for="Email">E-Mail</label>
-                        <input type="email" class="form-control" name="email" id="eMmail" placeholder="Введите адрес электронной почты">
+                        <label for="editEmail">E-Mail</label>
+                        <input type="email" class="form-control" name="email" id="editEmail" placeholder="Введите адрес электронной почты" required>
                     </div>
                     <div class="form-group">
-                        <label for="Address">Адрес</label>
-                        <input type="text" class="form-control" name="address" id="addRess" placeholder="Введите ваш адрес">
+                        <label for="editAddress">Адрес</label>
+                        <input type="text" class="form-control" name="address" id="editAddress" placeholder="Введите ваш адрес">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -2,6 +2,7 @@
 
 class User {
 
+    private $id;
     private $fullname;
     private $email;
     private $addrss;
@@ -20,10 +21,6 @@ class User {
 
     public function add() {
         
-        echo $this->fullname;
-        echo $this->email;
-        echo $this->address;
-        
         $this->dbc->query("INSERT INTO User (fullname, email, address) VALUES('" .
                 $this->fullname . "', '" .
                 $this->email . "', '" .
@@ -31,10 +28,13 @@ class User {
     }
 
     public function edit() {
-        $this->dbc->query("UPDATE User SET'" .
-                $this->fullname . "', '" .
-                $this->email . "', '" .
-                $this->address . "'");
+        //echo $this->id;
+        
+        $this->dbc->query("UPDATE User SET "
+                . "fullname = '" . $this->fullname . "', "
+                . "email = '" . $this->email . "', "
+                . "address = '" . $this->address . "'"
+                . "WHERE id = " . $this->id);
     }
 
     public function delete() {
