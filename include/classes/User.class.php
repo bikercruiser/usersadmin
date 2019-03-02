@@ -19,7 +19,12 @@ class User {
     }
 
     public function add() {
-        $this->dbc->query("INSERT INTO User VALUES('" .
+        
+        echo $this->fullname;
+        echo $this->email;
+        echo $this->address;
+        
+        $this->dbc->query("INSERT INTO User (fullname, email, address) VALUES('" .
                 $this->fullname . "', '" .
                 $this->email . "', '" .
                 $this->address . "')");
@@ -33,9 +38,14 @@ class User {
     }
 
     public function delete() {
-        $this->dbc->query("DELETE FROM User WHERE id = '" . $this->id . "'");
+        foreach($this->id as $id) {
+            $this->dbc->query("DELETE FROM User WHERE id = '" . $id . "'");
+        }
     }
 
+    public function get() {
+        return $this->dbc->query("SELECT id, fullname, email, address FROM User");
+    }
 }
 
 ?>
