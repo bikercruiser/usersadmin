@@ -1,0 +1,21 @@
+<?php
+
+class Authenticate {
+    
+    private $login;
+    private $password;
+    
+    function __construct() {
+
+        require $_SERVER['DOCUMENT_ROOT'] . '/include/classes/Db.class.php';
+
+        $this->login           = $_POST['login'];
+        $this->password     = $_POST['password'];
+        $this->dbc          = Db::connect();
+    }
+    
+    private function convPassToSha() {
+    return hash('sha256', $this->password);
+}
+}
+?>
