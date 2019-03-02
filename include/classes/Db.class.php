@@ -14,12 +14,5 @@ class Db {
         
         return $dbc;
     }
-    
-    /*
-    public function insertData() {
-        
-    }
-     * 
-     */
 }
 ?>
