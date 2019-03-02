@@ -1,18 +1,15 @@
 <?php
 
-//require_once 'config/config.php';
-//require 'include/classes/Db.class.php';
 spl_autoload_register(function ($class_name) {
     include $_SERVER['DOCUMENT_ROOT'] . '/include/classes/' . $class_name . '.class.php';
 });
 
-/*
-$cls = new Db();
-$cls->connect();
- * 
- */
+//Header
 require_once 'views/header.php';
+
+//Main content
 require_once 'views/main.php';
 
+//Footer
 require_once 'views/footer.php';
 ?>
