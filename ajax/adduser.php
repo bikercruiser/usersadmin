@@ -5,6 +5,6 @@ spl_autoload_register(function ($class_name) {
 });
 
 $user = new User();
-$user->add();;
+$user->add();
 
 ?>
