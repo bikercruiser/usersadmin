@@ -37,7 +37,7 @@ class Authenticate {
     }
 
     public function logout() {
-        $this->dbc->query("DELETE FROM Session WHERE session_id = '" . session_id() ."'");
+        $this->dbc->query("DELETE FROM Session WHERE session_id = '" . session_id() . "'");
     }
 
     private function getUserPassDb() {
