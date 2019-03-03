@@ -10,13 +10,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="fullName">ФИО</label>
+                    <div class="form-group required">
+                        <label for="fullName" class="control-label">ФИО</label>
                         <input type="text" class="form-control" name="fullname" id="fullName" placeholder="Введите ваше имя" required>
                     </div>
-                    <div class="form-group">
-                        <label for="eMail">E-Mail</label>
+                    <div class="form-group required">
+                        <label for="eMail" class="control-label">E-Mail</label>
                         <input type="email" class="form-control" name="email" id="eMail" placeholder="Введите адрес электронной почты" required>
+                        <div class="invalid-feedback">
+                            Данный E-Mail уже используется
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="Address">Адрес</label>

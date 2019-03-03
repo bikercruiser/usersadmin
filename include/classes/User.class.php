@@ -10,15 +10,15 @@ class User {
 
     function __construct() {
 
-        $this->id           = $_POST['id'];
-        $this->fullname     = $_POST['fullname'];
-        $this->email        = $_POST['email'];
-        $this->address      = $_POST['address'];
-        $this->dbc          = Db::connect();
+        $this->id = $_POST['id'];
+        $this->fullname = $_POST['fullname'];
+        $this->email = $_POST['email'];
+        $this->address = $_POST['address'];
+        $this->dbc = Db::connect();
     }
 
     public function add() {
-        
+
         $this->dbc->query("INSERT INTO User (fullname, email, address) VALUES('" .
                 $this->fullname . "', '" .
                 $this->email . "', '" .
@@ -27,7 +27,7 @@ class User {
 
     public function edit() {
         //echo $this->id;
-        
+
         $this->dbc->query("UPDATE User SET "
                 . "fullname = '" . $this->fullname . "', "
                 . "email = '" . $this->email . "', "
@@ -36,7 +36,7 @@ class User {
     }
 
     public function delete() {
-        foreach($this->id as $id) {
+        foreach ($this->id as $id) {
             $this->dbc->query("DELETE FROM User WHERE id = '" . $id . "'");
         }
     }
@@ -44,6 +44,24 @@ class User {
     public function get() {
         return $this->dbc->query("SELECT id, fullname, email, address FROM User");
     }
+
+    public function checkMail() {
+        return $this->numMailInDb();
+    }
+
+    private function numMailInDb() {
+        if(empty($this->id)) {
+            $where = "email = '" . $this->email . "'";
+        } else {
+            $where = "email = '" . $this->email . "' AND id <> " . $this->id;
+        }
+        $result = $this->dbc->query("SELECT COUNT(email) FROM User WHERE " . $where);
+        while ($row = $result->fetch_assoc()) {
+            $num_email = $row['COUNT(email)'];
+        }
+        return $num_email;
+    }
+
 }
 
 ?>

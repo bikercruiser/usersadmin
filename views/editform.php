@@ -11,13 +11,16 @@
                 </div>
                 <input type="hidden" name="id" id="editId" value="">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="editFullName">ФИО</label>
+                    <div class="form-group required">
+                        <label for="editFullName" class="control-label">ФИО</label>
                         <input type="text" class="form-control" name="fullname" id="editFullName" placeholder="Введите ваше имя" required>
                     </div>
-                    <div class="form-group">
-                        <label for="editEmail">E-Mail</label>
-                        <input type="email" class="form-control" name="email" id="editEmail" placeholder="Введите адрес электронной почты" required>
+                    <div class="form-group required">
+                        <label for="editEmail" class="control-label">E-Mail</label>
+                        <input type="email" class="form-control" name="email" id="editMail" placeholder="Введите адрес электронной почты" required>
+                        <div class="invalid-feedback">
+                            Данный E-Mail уже используется
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="editAddress">Адрес</label>
