@@ -3,6 +3,7 @@ $(function () {
     //Load table on first page load
     loadTable();
 
+/*
     $(document).ready(function () {
         var table = $('#userTable').DataTable({
             ajax: '/ajax/gettable.php',
@@ -19,6 +20,7 @@ $(function () {
             ]
         });
     });
+*/
 
     //Add user to table
     $('#addUser').on('submit', function (e) {
@@ -59,11 +61,9 @@ $(function () {
             data: $('#editUserForm').serialize(),
             success: function (response, textStatus, jqXHR) {
 
-                //alert(data.id);
-                console.log(response);
-                //alert('error');
                 //Hide form modal window
                 $('#editUser').modal('hide');
+                
                 //Clean table body
                 $("#userTableBody").empty();
 
