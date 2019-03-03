@@ -2,9 +2,13 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . '/include/autoloader.php';
 
-$user = new User();
-$result = $user->get();
+if ($auth->getSessIdNum() != 0) {
 
-$data = $result->fetch_all( MYSQLI_ASSOC );
-echo json_encode($data);
+    $data = $user->get()->fetch_all(MYSQLI_ASSOC);
+    echo json_encode($data);
+} else {
+    header("HTTP/1.1 401 Unauthorized");
+    echo "Error: 401 Unauthorized";
+    exit;
+}
 ?>

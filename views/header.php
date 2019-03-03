@@ -1,8 +1,5 @@
 <?php
-
 require $_SERVER['DOCUMENT_ROOT'] . '/include/autoloader.php';
-
-$auth = new Authenticate();
 
 if ($auth->getSessIdNum() == 0) {
     //Fix error too many redirects

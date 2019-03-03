@@ -10,8 +10,6 @@ class User {
 
     function __construct() {
 
-        require $_SERVER['DOCUMENT_ROOT'] . '/include/classes/Db.class.php';
-
         $this->id           = $_POST['id'];
         $this->fullname     = $_POST['fullname'];
         $this->email        = $_POST['email'];
