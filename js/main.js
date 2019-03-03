@@ -3,6 +3,23 @@ $(function () {
     //Load table on first page load
     loadTable();
 
+    $(document).ready(function () {
+        var table = $('#userTable').DataTable({
+            ajax: '/ajax/gettable.php',
+            columns: [
+                {data: 'id'},
+                {data: 'fullname'},
+                {data: 'email'},
+                {data: 'address'},
+            ],
+            rowReorder: true,
+            columnDefs: [
+                {orderable: true, className: 'reorder', targets: 0},
+                {orderable: false, targets: '_all'}
+            ]
+        });
+    });
+
     //Add user to table
     $('#addUser').on('submit', function (e) {
         e.preventDefault();
