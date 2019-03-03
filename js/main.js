@@ -1,27 +1,10 @@
 $(function () {
 
     //Load table on first page load
-    loadTable();
-
-/*
     $(document).ready(function () {
-        var table = $('#userTable').DataTable({
-            ajax: '/ajax/gettable.php',
-            columns: [
-                {data: 'id'},
-                {data: 'fullname'},
-                {data: 'email'},
-                {data: 'address'},
-            ],
-            rowReorder: true,
-            columnDefs: [
-                {orderable: true, className: 'reorder', targets: 0},
-                {orderable: false, targets: '_all'}
-            ]
-        });
+        loadTable();
     });
-*/
-
+    
     //Add user to table
     $('#addUser').on('submit', function (e) {
         e.preventDefault();
@@ -33,15 +16,12 @@ $(function () {
 
                 //Hide form modal window
                 $('#addUser').modal('hide');
-
-                //Clean table body
-                $("#userTableBody").empty();
-
+                
                 //Clean form
                 $('#fullName').val('');
                 $('#eMail').val('');
                 $('#addRess').val('');
-
+                
                 //Load new content to table
                 loadTable();
             },
@@ -50,11 +30,10 @@ $(function () {
             }
         });
     });
-
+    
     //Edit user info
     $('#editUser').on('submit', function (e) {
         e.preventDefault();
-
         $.ajax({
             url: '/ajax/edituser.php',
             type: 'POST',
@@ -63,11 +42,6 @@ $(function () {
 
                 //Hide form modal window
                 $('#editUser').modal('hide');
-                
-                //Clean table body
-                $("#userTableBody").empty();
-
-                //Load new content to table
                 loadTable();
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -75,11 +49,10 @@ $(function () {
             }
         });
     });
-
+    
     //Call Edit user modal window and set it fields
     $(document).on('click', 'a[data-role=edit]', function (e) {
         e.preventDefault();
-
         //Get data from current table row
         var id = $(this).data('id');
         var fullName = $('#' + id).children('td[data-target=fullName]').text();
@@ -91,7 +64,7 @@ $(function () {
         $('#editAddress').val(addRess);
         $('#editMail').removeClass("is-invalid");
     });
-
+    
     //Delete user from table
     $('#userTableForm').on('submit', function (e) {
         e.preventDefault();
@@ -100,15 +73,11 @@ $(function () {
             type: 'POST',
             data: $('#userTableForm').serialize(),
             success: function (data) {
-
-                //Clean table body
-                $("#userTableBody").empty();
-                //Load new content to table
                 loadTable();
             }
         });
     });
-
+    
     //Check E-Mail
     checkMail('#eMail', '#addUserForm', '#addUserSubmit');
     checkMail('#editMail', '#editUserForm', '#editUserSubmit');
@@ -120,14 +89,101 @@ function loadTable() {
         url: '/ajax/gettable.php',
         dataType: 'json',
         success: function (response) {
-            var tr = '';
-            $.each(response, function (i, item) {
-                tr += '<tr id="' + item.id + '"><td><input type="checkbox" name="id[]" value="' + item.id + '"></td>'
-                        + '<td data-target="fullName">' + item.fullname + '</td><td data-target="eMail">' + item.email + '</td><td data-target=addRess>' + item.address + '</td>'
-                        + '<td><a href="#" data-role="edit" data-toggle="modal" data-target="#editUser" data-id="' + item.id + '">Изменить</a></td>'
-                        + '</tr>';
-            })
-            $('#userTable').append(tr);
+
+            var table = $('#userTable').DataTable({
+                language: {
+                    "emptyTable": "Нет доступных записей"
+                },
+                destroy: true,
+                ajax: {
+                    url: '/ajax/gettable_dt.php',
+                },
+                'columns': [
+                    {"data": "sequence"},
+                    {"data": "id"},
+                    {"data": "fullname"},
+                    {"data": "email"},
+                    {"data": "address"},
+                    {"data": "id"},
+                ],
+                'createdRow': function (row, data, dataIndex) {
+                    $(row).attr('id', data.id);
+                },
+                'columnDefs': [
+                    {
+                        'targets': 0,
+                        'orderable': false,
+                        'searchable': false,
+                        'visible': false,
+                    },
+                    {
+                        'targets': 1,
+                        'searchable': false,
+                        'orderable': false,
+                        'render': function (data, type, full, meta) {
+                            return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+                        }
+                    },
+                    {
+                        'targets': 2,
+                        'width': '30%',
+                        'createdCell': function (td, cellData, rowData, row, col) {
+                            $(td).attr('data-target', 'fullName');
+                        }
+                    },
+                    {
+                        'targets': 3,
+                        'width': '20%',
+                        'createdCell': function (td, cellData, rowData, row, col) {
+                            $(td).attr('data-target', 'eMail');
+                        }
+                    },
+                    {
+                        'targets': 4,
+                        'width': '30%',
+                        'createdCell': function (td, cellData, rowData, row, col) {
+                            $(td).attr('data-target', 'addRess');
+                        }
+                    },
+                    {
+                        'targets': 5,
+                        'searchable': false,
+                        'orderable': false,
+                        'render': function (data, type, full, meta) {
+                            return '<a href="#" data-role="edit" data-toggle="modal" data-target="#editUser" data-id="' + $('<div/>').text(data).html() + '">Изменить</a>';
+                        }
+                    },
+                    {
+                        'targets': 6,
+                        'className': 'reorder',
+                        'searchable': false,
+                        'orderable': false,
+                        'render': function (data, type, full, meta) {
+                            return '<img src="images/sort-icon.svg" height="18" width="18">';
+                        }
+                    },
+                ],
+                rowReorder: {
+                    dataSrc: 'sequence',
+                    selector: 'td.reorder'
+                },
+                retrieve: false,
+                searching: false,
+                paging: false,
+                info: false
+            });
+            table.on('row-reorder', function (e, diff, edit) {
+                for (var i = 0, ien = diff.length; i < ien; i++) {
+                    //console.log($(diff[i].node).attr("id") + "---" + diff[i].oldData + "-->" + diff[i].newData);
+                    var id = $(diff[i].node).attr("id");
+                    var newSeq = diff[i].newData;
+                    $.ajax({
+                        type: 'post',
+                        url: '/ajax/updateseq.php',
+                        data: {id: id, sequence: newSeq},
+                    });
+                }
+            });
         },
     });
 }
@@ -135,12 +191,13 @@ function loadTable() {
 function checkMail(input_ident, form_ident, submit_ident) {
     $(input_ident).on('change', function (e) {
         e.preventDefault();
-        //alert('OK');
+
         $.ajax({
             type: 'POST',
             url: '/ajax/checkmail.php',
             data: $(form_ident).serialize(),
             success: function (response) {
+
                 //Clean invalid states
                 $(input_ident).removeClass("is-invalid");
                 $(submit_ident).prop("disabled", false);

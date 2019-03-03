@@ -18,10 +18,12 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>ФИО</th>
                         <th>E-Mail</th>
                         <th>Адрес</th>
-                        <th></th>
+                        <th>Изменить</th>
+                        <th class="text-center">Сортировка</th>
                     </tr>
                 </thead>
                 <tbody id="userTableBody"></tbody>

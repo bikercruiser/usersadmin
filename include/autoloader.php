@@ -1,5 +1,6 @@
 <?php
 
+//Load config
 require $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
 
 //Autoload classess

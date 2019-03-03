@@ -14,6 +14,7 @@ class User {
         $this->fullname = $_POST['fullname'];
         $this->email = $_POST['email'];
         $this->address = $_POST['address'];
+        $this->sequence = $_POST['sequence'];
         $this->dbc = Db::connect();
     }
 
@@ -23,6 +24,9 @@ class User {
                 $this->fullname . "', '" .
                 $this->email . "', '" .
                 $this->address . "')");
+
+        //Update sequence column
+        $this->dbc->query("UPDATE User SET sequence = id WHERE id = " . $this->dbc->insert_id);
     }
 
     public function edit() {
@@ -42,15 +46,19 @@ class User {
     }
 
     public function get() {
-        return $this->dbc->query("SELECT id, fullname, email, address FROM User");
+        return $this->dbc->query("SELECT id, fullname, email, address, sequence FROM User ORDER BY sequence");
     }
 
     public function checkMail() {
         return $this->numMailInDb();
     }
 
+    public function updateSequence() {
+        $this->dbc->query("UPDATE User SET sequence = " . $this->sequence . " WHERE id = " . $this->id);
+    }
+
     private function numMailInDb() {
-        if(empty($this->id)) {
+        if (empty($this->id)) {
             $where = "email = '" . $this->email . "'";
         } else {
             $where = "email = '" . $this->email . "' AND id <> " . $this->id;

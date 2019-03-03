@@ -1,5 +1,11 @@
 .form-group.required .control-label:after {
-  content:"*";
-  color:red;
+    content:"*";
+    color:red;
 }
 
+#result {
+    border: 1px solid #888;
+    background: #f7f7f7;
+    padding: 1em;
+    margin-bottom: 1em;
+}
