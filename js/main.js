@@ -63,6 +63,8 @@ $(function () {
         $('#editMail').val(eMail);
         $('#editAddress').val(addRess);
         $('#editMail').removeClass("is-invalid");
+        $('#addUserSubmit').prop('disabled', false);
+        $('#editUserSubmit').prop('disabled', false);
     });
     
     //Delete user from table
