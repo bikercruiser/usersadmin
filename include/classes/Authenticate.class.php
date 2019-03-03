@@ -36,6 +36,10 @@ class Authenticate {
         $this->dbc->query("INSERT INTO Session (user_id, session_id, time) VALUES(" . $this->getUserId() . ", '" . session_id() . "', " . time() . ")");
     }
 
+    public function logout() {
+        $this->dbc->query("DELETE FROM Session WHERE session_id = '" . session_id() ."'");
+    }
+
     private function getUserPassDb() {
         $result = $this->dbc->query("SELECT password FROM Authenticate WHERE login = '" . $this->login . "'");
         while ($row = $result->fetch_assoc()) {

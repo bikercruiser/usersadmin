@@ -6,7 +6,7 @@
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
-    <a class="btn btn-outline-primary" href="#">Log out</a>
+    <a class="btn btn-outline-primary" href="/logout.php">Log out</a>
 </div>
 <div class="container">
     <div class="p-3">
