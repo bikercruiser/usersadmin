@@ -12,6 +12,7 @@ class Authenticate {
         $this->login = $_POST['login'];
         $this->password = $_POST['password'];
         $this->dbc = Db::connect();
+        $this->cleanOldSessions();
     }
 
     public function checkPassword() {
@@ -22,8 +23,17 @@ class Authenticate {
         }
     }
     
+    public function getSessIdNum() {
+        $result = $this->dbc->query("SELECT COUNT(session_id) FROM Session WHERE session_id = '" . session_id() . "'");
+        while($row = $result->fetch_assoc()) {
+            //$num_sessions = $row['COUNT(session_id)'];
+            $num_sessions = $row['COUNT(session_id)'];
+        }
+        return $num_sessions;
+    }
+    
     public function saveSessIdToDb() {
-        $this->dbc->query("INSERT INTO Session (user_id, session_id) VALUES(" . $this->getUserId() . ", '" . session_id() . "')");
+        $this->dbc->query("INSERT INTO Session (user_id, session_id, time) VALUES(" . $this->getUserId() . ", '" . session_id() . "', " . time() . ")");
     }
     
     private function getUserPassDb() {
@@ -38,12 +48,18 @@ class Authenticate {
         return hash('sha256', $this->password);
     }
     
-    public function getUserId() {
+    private function getUserId() {
         $result = $this->dbc->query("SELECT id FROM Authenticate WHERE login = '" . $this->login . "'");
         while($row = $result->fetch_assoc()) {
             $id = $row['id'];
         }
         return $id;
+    }
+    
+    private function cleanOldSessions() {
+        require $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
+        $time = time() - $cookie_lifetime;
+        $this->dbc->query("DELETE FROM Session WHERE time < " . $time);
     }
 }
 ?>
