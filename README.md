@@ -25,7 +25,7 @@
 
 (CLI)`mysql -u usersadmin -p usersadmins < usersadmin.sql`
 
-2. Указываем параметры базы в конфигурационном файле системы [config/config.php](config/config.php):
+2. Указываем параметры базы и время жизни сессионных cookie в конфигурационном файле системы [config/config.php](config/config.php):
 ```php
 //Db settings
 define(DB_HOST,     "localhost");
